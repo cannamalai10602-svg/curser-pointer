@@ -245,6 +245,28 @@ export function DashboardPage() {
   const navigate = useNavigate()
   const router = useRouter()
   const user = authApi.getCurrentUser()
+  const aiHighlights = [
+    {
+      label: 'Models monitored',
+      value: '12',
+      detail: 'Production and sandbox agents',
+    },
+    {
+      label: 'Tasks automated',
+      value: '3.8k',
+      detail: 'Across support, research, and reporting',
+    },
+    {
+      label: 'Avg. response time',
+      value: '1.4s',
+      detail: 'For approved AI workflows',
+    },
+  ]
+  const aiWorkflows = [
+    'Summarize customer conversations into action items',
+    'Draft reports from uploaded knowledge sources',
+    'Classify requests and route them to the right team',
+  ]
 
   const handleLogout = async () => {
     authApi.logout()
@@ -258,10 +280,10 @@ export function DashboardPage() {
         <header className="flex flex-col gap-4 border-b border-zinc-200 pb-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase text-emerald-700">
-              Protected route
+              AI workspace
             </p>
             <h1 className="mt-2 text-3xl font-semibold leading-tight">
-              Workspace dashboard
+              Intelligence dashboard
             </h1>
           </div>
           <button
@@ -275,30 +297,54 @@ export function DashboardPage() {
 
         <div className="grid gap-6 py-10 lg:grid-cols-[1fr_0.8fr]">
           <div>
+            <h2 className="text-2xl font-semibold leading-tight text-zinc-950">
+              Build, monitor, and improve your AI workflows.
+            </h2>
             <p className="text-base leading-7 text-zinc-600">
-              You are signed in as{' '}
+              Welcome back,{' '}
               <span className="font-semibold text-zinc-950">
                 {user?.name}
               </span>
-              . Route guards now keep anonymous visitors out of this area and
-              redirect authenticated users away from the login and sign-up
-              pages.
+              . Use this protected space to review model performance, track
+              automation coverage, and keep human approval in the loop for
+              sensitive AI decisions.
             </p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              {aiHighlights.map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-lg border border-zinc-200 bg-zinc-50 p-4"
+                >
+                  <p className="text-2xl font-semibold text-zinc-950">
+                    {item.value}
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-zinc-800">
+                    {item.label}
+                  </p>
+                  <p className="mt-1 text-sm leading-5 text-zinc-500">
+                    {item.detail}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="rounded-lg border border-emerald-200 bg-[#eef6f2] p-5">
             <p className="text-sm font-semibold uppercase text-emerald-700">
-              Session
+              Active AI workflows
             </p>
-            <dl className="mt-4 space-y-3 text-sm">
-              <div className="flex items-center justify-between gap-4">
-                <dt className="text-zinc-500">Name</dt>
-                <dd className="font-medium text-zinc-950">{user?.name}</dd>
-              </div>
-              <div className="flex items-center justify-between gap-4">
-                <dt className="text-zinc-500">Email</dt>
-                <dd className="font-medium text-zinc-950">{user?.email}</dd>
-              </div>
-            </dl>
+            <ul className="mt-4 space-y-3 text-sm text-zinc-700">
+              {aiWorkflows.map((workflow) => (
+                <li key={workflow} className="flex gap-3">
+                  <span className="mt-2 h-2 w-2 rounded-full bg-emerald-700" />
+                  <span>{workflow}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-6 rounded-lg bg-white/70 p-4 text-sm leading-6 text-zinc-600">
+              Signed in as <span className="font-semibold">{user?.email}</span>
+              . Your session keeps this AI dashboard available only after
+              authentication.
+            </div>
           </div>
         </div>
       </section>
