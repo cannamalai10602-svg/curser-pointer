@@ -290,11 +290,11 @@ export function DashboardPage() {
   const aiActivity = [
     {
       time: '09:20',
-      event: 'Support agent summarized 48 tickets into 11 priority themes.',
+      event: 'Support agent summarized 48 tickets into 11 priority themes and featurs updated call changes .',
     },
     {
       time: '10:05',
-      event: 'Research assistant created a competitor brief from saved sources.',
+      event: 'Research assistant created a competitor brief from saved sources  webhook courently updated .',
     },
     {
       time: '11:30',
