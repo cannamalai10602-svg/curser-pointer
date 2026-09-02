@@ -247,25 +247,59 @@ export function DashboardPage() {
   const user = authApi.getCurrentUser()
   const aiHighlights = [
     {
-      label: 'Models monitored',
+      label: 'AI agents online',
       value: '12',
-      detail: 'Production and sandbox agents',
+      detail: 'Production, support, and research agents',
     },
     {
       label: 'Tasks automated',
       value: '3.8k',
-      detail: 'Across support, research, and reporting',
+      detail: 'This month across approved workflows',
     },
     {
-      label: 'Avg. response time',
-      value: '1.4s',
-      detail: 'For approved AI workflows',
+      label: 'Accuracy score',
+      value: '94%',
+      detail: 'Human-reviewed outputs accepted',
     },
   ]
   const aiWorkflows = [
     'Summarize customer conversations into action items',
     'Draft reports from uploaded knowledge sources',
     'Classify requests and route them to the right team',
+  ]
+  const aiInsights = [
+    {
+      title: 'Sales assistant',
+      status: 'Live',
+      description:
+        'Qualifies inbound leads, drafts follow-up emails, and flags high-intent accounts for review.',
+    },
+    {
+      title: 'Knowledge analyst',
+      status: 'Training',
+      description:
+        'Indexes product notes and support docs to answer internal questions with linked sources.',
+    },
+    {
+      title: 'Risk monitor',
+      status: 'Review',
+      description:
+        'Checks generated content for sensitive data, policy gaps, and approval requirements.',
+    },
+  ]
+  const aiActivity = [
+    {
+      time: '09:20',
+      event: 'Support agent summarized 48 tickets into 11 priority themes.',
+    },
+    {
+      time: '10:05',
+      event: 'Research assistant created a competitor brief from saved sources.',
+    },
+    {
+      time: '11:30',
+      event: 'Risk monitor held 3 outputs for human approval before delivery.',
+    },
   ]
 
   const handleLogout = async () => {
@@ -276,7 +310,7 @@ export function DashboardPage() {
 
   return (
     <main className="min-h-svh bg-[#f6f7f4] px-4 py-8 text-zinc-950 sm:px-6">
-      <section className="mx-auto flex min-h-[calc(100svh-4rem)] max-w-5xl flex-col justify-between rounded-lg border border-zinc-200 bg-white p-6 shadow-sm sm:p-8">
+      <section className="mx-auto flex min-h-[calc(100svh-4rem)] max-w-6xl flex-col justify-between rounded-lg border border-zinc-200 bg-white p-6 shadow-sm sm:p-8">
         <header className="flex flex-col gap-4 border-b border-zinc-200 pb-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase text-emerald-700">
@@ -295,19 +329,18 @@ export function DashboardPage() {
           </button>
         </header>
 
-        <div className="grid gap-6 py-10 lg:grid-cols-[1fr_0.8fr]">
+        <div className="grid gap-6 py-10 lg:grid-cols-[1fr_0.85fr]">
           <div>
             <h2 className="text-2xl font-semibold leading-tight text-zinc-950">
-              Build, monitor, and improve your AI workflows.
+              Build, monitor, and improve your AI operations.
             </h2>
             <p className="text-base leading-7 text-zinc-600">
               Welcome back,{' '}
               <span className="font-semibold text-zinc-950">
                 {user?.name}
               </span>
-              . Use this protected space to review model performance, track
-              automation coverage, and keep human approval in the loop for
-              sensitive AI decisions.
+              . Review active agents, track automation quality, and keep human
+              approval in the loop for sensitive AI decisions.
             </p>
             <div className="mt-6 grid gap-3 sm:grid-cols-3">
               {aiHighlights.map((item) => (
@@ -327,23 +360,63 @@ export function DashboardPage() {
                 </div>
               ))}
             </div>
-          </div>
-          <div className="rounded-lg border border-emerald-200 bg-[#eef6f2] p-5">
-            <p className="text-sm font-semibold uppercase text-emerald-700">
-              Active AI workflows
-            </p>
-            <ul className="mt-4 space-y-3 text-sm text-zinc-700">
-              {aiWorkflows.map((workflow) => (
-                <li key={workflow} className="flex gap-3">
-                  <span className="mt-2 h-2 w-2 rounded-full bg-emerald-700" />
-                  <span>{workflow}</span>
-                </li>
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              {aiInsights.map((insight) => (
+                <article
+                  key={insight.title}
+                  className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="text-sm font-semibold text-zinc-950">
+                      {insight.title}
+                    </h3>
+                    <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
+                      {insight.status}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-zinc-600">
+                    {insight.description}
+                  </p>
+                </article>
               ))}
-            </ul>
-            <div className="mt-6 rounded-lg bg-white/70 p-4 text-sm leading-6 text-zinc-600">
-              Signed in as <span className="font-semibold">{user?.email}</span>
-              . Your session keeps this AI dashboard available only after
-              authentication.
+            </div>
+          </div>
+          <div className="space-y-4">
+            <div className="rounded-lg border border-emerald-200 bg-[#eef6f2] p-5">
+              <p className="text-sm font-semibold uppercase text-emerald-700">
+                Active AI workflows
+              </p>
+              <ul className="mt-4 space-y-3 text-sm text-zinc-700">
+                {aiWorkflows.map((workflow) => (
+                  <li key={workflow} className="flex gap-3">
+                    <span className="mt-2 h-2 w-2 rounded-full bg-emerald-700" />
+                    <span>{workflow}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6 rounded-lg bg-white/70 p-4 text-sm leading-6 text-zinc-600">
+                Signed in as{' '}
+                <span className="font-semibold">{user?.email}</span>. Your
+                session keeps this AI dashboard available only after
+                authentication.
+              </div>
+            </div>
+            <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-5">
+              <p className="text-sm font-semibold uppercase text-zinc-500">
+                Recent AI activity
+              </p>
+              <div className="mt-4 space-y-4">
+                {aiActivity.map((activity) => (
+                  <div key={`${activity.time}-${activity.event}`} className="flex gap-3">
+                    <span className="w-12 shrink-0 text-sm font-semibold text-zinc-500">
+                      {activity.time}
+                    </span>
+                    <p className="text-sm leading-6 text-zinc-700">
+                      {activity.event}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
